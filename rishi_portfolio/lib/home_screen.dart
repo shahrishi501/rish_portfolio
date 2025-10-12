@@ -1,7 +1,6 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
-import 'package:rishi_portfolio/widgets/app_icons_screen.dart';
-import 'package:rishi_portfolio/widgets/phone_frame.dart';
+import 'package:rishi_portfolio/app_icons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
