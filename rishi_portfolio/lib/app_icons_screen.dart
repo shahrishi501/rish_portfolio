@@ -9,7 +9,7 @@ import 'package:rishi_portfolio/widgets/project_page_widget.dart';
 import 'package:rishi_portfolio/widgets/skills_tetris_game_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Main Portfolio Widget with Navigator
+
 class PortfolioWidget extends StatelessWidget {
   const PortfolioWidget({super.key});
 
@@ -337,12 +337,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                             SkillsTetrisGame(),
                                       ),
                                     );
-                                    // _showFolderDialog(context, 'Skills', [
-                                    //   _appIcon(Icons.code, 'Flutter'),
-                                    //   _appIcon(Icons.storage, 'Firebase'),
-                                    //   _appIcon(Icons.language, 'API'),
-                                    //   _appIcon(Icons.web, 'HTML'),
-                                    // ]);
                                   },
                                   child: Container(
                                     height: 70,

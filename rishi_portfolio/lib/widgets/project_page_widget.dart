@@ -1,23 +1,94 @@
 import 'package:flutter/material.dart';
 
+class Project {
+  final String name;
+  final String description;
+  final String imageUrl;
+
+  Project({
+    required this.name,
+    required this.description,
+    required this.imageUrl,
+  });
+}
+
 class ProjectPageWidget extends StatelessWidget {
   const ProjectPageWidget({super.key});
+
+  List<Project> get projects => [
+    Project(
+      name: 'SVKM EduConnect',
+      description: 'Description of SVKM EduConnect',
+      imageUrl: 'assets/icons/svkm_educonnect.png',
+    ),
+    Project(
+      name: 'Noteng',
+      description: 'Description of Noteng',
+      imageUrl: 'assets/icons/playstore-icon.png',
+    ),
+    Project(
+      name: "UniStay",
+      description: 'Description of UniStay',
+      imageUrl: 'assets/icons/image 3.png',
+    ),
+    Project(
+      name: "YouBook",
+      description: 'Description of YouBook',
+      imageUrl: 'assets/icons/Youbook logo_Red-02.png',
+    )
+    // Add more projects as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-    return ListView(
-      shrinkWrap: true,
-      children: [ProjectCard(w: w), ProjectCard(w: w)],
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30, left: 8,),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  Center(
+                    child: Text(
+                      'Projects',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            ListView(
+              shrinkWrap: true,
+              children:
+                  projects
+                      .map((project) => ProjectCard(w: w, project: project))
+                      .toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({super.key, required this.w});
+  const ProjectCard({super.key, required this.w, required this.project});
 
   final double w;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +102,7 @@ class ProjectCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/img/background.jpg", // widget.response.featuredImage ?? ''
-                ),
+                image: AssetImage(project.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),

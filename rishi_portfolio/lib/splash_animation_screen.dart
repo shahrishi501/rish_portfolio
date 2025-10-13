@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rishi_portfolio/home_screen.dart';
 import 'package:svg_path_parser/svg_path_parser.dart';
 
 class HelloAnimationFixed extends StatefulWidget {
@@ -14,42 +15,79 @@ class HelloAnimationFixed extends StatefulWidget {
 class _HelloAnimationFixedState extends State<HelloAnimationFixed>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+  final List<String> _svgFiles = [
+  'assets/icons/Group.svg',
+  'assets/icons/hindi.svg',
+  'assets/icons/italian.svg',
+  'assets/icons/spanish.svg',
+];
   List<Path> _paths = [];
+  List<List<Path>> _allPaths = [];
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
     );
 
-    _loadAllPaths().then((_) => _controller.repeat(reverse: false));
+      _loadAllPaths().then((_) {
+        _animateNextLanguage();
+      });
+
+     Future.delayed(const Duration(seconds: 10), () {
+      if (!mounted) return;
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ));
+    });
   }
 
   Future<void> _loadAllPaths() async {
-    final raw = await rootBundle.loadString('assets/icons/Group.svg');
+  final List<List<Path>> allPaths = [];
 
-    // Find all d="...":
+  for (final pathFile in _svgFiles) {
+    final raw = await rootBundle.loadString(pathFile);
     final regex = RegExp(r'd="([^"]+)"');
     final matches = regex.allMatches(raw);
-
     final List<Path> parsed = [];
+
     for (final m in matches) {
       final d = m.group(1);
       if (d != null && d.trim().isNotEmpty) {
         try {
-          final p = parseSvgPath(d);
-          parsed.add(p);
+          parsed.add(parseSvgPath(d));
         } catch (e) {
-          // ignore parse errors for complex commands; you can log if needed
-          debugPrint('Could not parse path: $e');
+          debugPrint('Could not parse path from $pathFile: $e');
         }
       }
     }
 
-    setState(() => _paths = parsed);
+    if (parsed.isNotEmpty) allPaths.add(parsed);
   }
+
+  setState(() {
+    _allPaths = allPaths;
+  });
+}
+
+void _animateNextLanguage() {
+  if (_allPaths.isEmpty) return;
+
+  setState(() => _paths = _allPaths[_currentIndex]);
+
+  _controller
+    ..reset()
+    ..forward().whenComplete(() async {
+      await Future.delayed(const Duration(milliseconds: 500)); // small pause
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % _allPaths.length;
+      });
+      _animateNextLanguage();
+    });
+}
 
   @override
   void dispose() {
@@ -91,8 +129,6 @@ class _HelloPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (paths.isEmpty) return;
-
-    // 1) Combine bounds to compute scaling & centering
     Rect? unionBounds;
     for (final p in paths) {
       final b = p.getBounds();
@@ -100,7 +136,7 @@ class _HelloPainter extends CustomPainter {
     }
     final bounds = unionBounds ?? Rect.fromLTWH(0, 0, 1, 1);
 
-    // compute scale to fit
+    
     final scale = (size.width * 0.9) / bounds.width; // 90% width
     final tx = (size.width - bounds.width * scale) / 2 - bounds.left * scale;
     final ty = (size.height - bounds.height * scale) / 2 - bounds.top * scale;
@@ -111,7 +147,6 @@ class _HelloPainter extends CustomPainter {
           ..scale(scale, scale);
     final Float64List matrix = m4.storage;
 
-    // 2) Transform each path and collect metrics
     final List<PathMetric> metrics = [];
     for (final p in paths) {
       final transformed = p.transform(matrix);
@@ -119,12 +154,11 @@ class _HelloPainter extends CustomPainter {
       metrics.addAll(pm);
     }
 
-    // 3) total length and current length to draw
+  
     double totalLength = 0;
     for (final pm in metrics) totalLength += pm.length;
     final drawUntil = totalLength * progress;
 
-    // 4) Build a path that contains everything from 0..drawUntil
     double drawn = 0;
     final Path visible = Path();
     Offset? tipPosition;
@@ -137,7 +171,6 @@ class _HelloPainter extends CustomPainter {
       final sub = pm.extractPath(0, take);
       visible.addPath(sub, Offset.zero);
 
-      // compute tip position (end of this subpath)
       final tangent = pm.getTangentForOffset(take);
       if (tangent != null) {
         tipPosition = tangent.position;
@@ -146,7 +179,6 @@ class _HelloPainter extends CustomPainter {
       drawn += take;
     }
 
-    // 5) Paint the visible path (solid stroke, rounded caps)
     final paint =
         Paint()
           ..style = PaintingStyle.stroke
@@ -156,7 +188,6 @@ class _HelloPainter extends CustomPainter {
 
     canvas.drawPath(visible, paint);
 
-    // 6) Optional: draw a small glowing pen dot at tip
     if (tipPosition != null) {
       final glowPaint =
           Paint()
