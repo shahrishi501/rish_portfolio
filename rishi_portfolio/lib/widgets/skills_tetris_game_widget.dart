@@ -12,8 +12,8 @@ class SkillsTetrisGame extends StatefulWidget {
 }
 
 class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
-  static const int rows = 20;
-  static const int cols = 10;
+  static const int rows = 15;
+  static const int cols = 8;
 
   // Grid to store landed blocks (null means empty)
   List<List<TechBlock?>> _grid = List.generate(
@@ -30,17 +30,17 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
   final List<Map<String, dynamic>> _techStacks = [
     {
       'name': 'Flutter',
-      'color': Colors.blue,
+      'color': Colors.white,
       'iconPath': 'assets/skill-icons/flutter.svg',
     },
     {
       'name': 'Firebase',
-      'color': Colors.orange,
+      'color': Colors.black,
       'iconPath': 'assets/skill-icons/firebase.svg',
     },
     {
       'name': 'Go',
-      'color': Colors.cyan,
+      'color': Colors.grey,
       'iconPath': 'assets/skill-icons/go.svg',
     },
     {
@@ -50,12 +50,12 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
     },
     {
       'name': 'MongoDB',
-      'color': Colors.greenAccent,
+      'color': Colors.purple,
       'iconPath': 'assets/skill-icons/mongodb.svg',
     },
     {
       'name': 'C++',
-      'color': Colors.yellow,
+      'color': Colors.orange,
       'iconPath': 'assets/skill-icons/cpp.svg',
     },
     {
@@ -115,6 +115,9 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
     _grid = List.generate(rows, (_) => List.filled(cols, null));
     _currentPiece = null;
 
+    // Pre-populate bottom rows with skills showcase
+    _populateInitialSkills();
+
     _spawnNewPiece();
 
     _gameTimer = Timer.periodic(Duration(milliseconds: 500), (timer) {
@@ -122,6 +125,34 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
         _moveDown();
       }
     });
+  }
+
+  void _populateInitialSkills() {
+    // Start from bottom row and work up
+    int currentRow = rows - 1;
+    int currentCol = 0;
+
+    for (var tech in _techStacks) {
+      // Place 3-4 blocks of each skill
+      int blocksToPlace = 3 + _random.nextInt(2); // 3 or 4 blocks per skill
+      
+      for (int i = 0; i < blocksToPlace; i++) {
+        if (currentRow < rows - 5) break; // Keep bottom 5 rows for showcase
+        
+        _grid[currentRow][currentCol] = TechBlock(
+          name: tech['name'],
+          color: tech['color'],
+          iconPath: tech['iconPath'],
+        );
+        
+        currentCol++;
+        if (currentCol >= cols) {
+          currentCol = 0;
+          currentRow--;
+          if (currentRow < rows - 5) break;
+        }
+      }
+    }
   }
 
   void _spawnNewPiece() {
@@ -318,12 +349,13 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final availableHeight = screenHeight - 240; // Space for header and controls
+    final availableHeight = screenHeight - 200; // Space for header and controls
 
     // Calculate block size based on available space
-    final blockSizeByWidth = screenWidth / cols;
-    final blockSizeByHeight = availableHeight / rows;
-    final blockSize = min(blockSizeByWidth, blockSizeByHeight).floorToDouble();
+    final blockSizeByWidth = (screenWidth * 0.9) / cols;
+    final blockSizeByHeight = (availableHeight * 0.8) / rows;
+    final calculatedBlockSize = min(blockSizeByWidth, blockSizeByHeight);
+    final blockSize = max(calculatedBlockSize, 50.0).floorToDouble();
 
     return Container(
       decoration: BoxDecoration(
@@ -444,12 +476,44 @@ class _SkillsTetrisGameState extends State<SkillsTetrisGame> {
                                   ),
                                 ),
                                 child: block != null
-                                    ? Padding(
-                                        padding: EdgeInsets.all(2.0),
-                                        child: SvgPicture.asset(
-                                          block.iconPath,
-                                          fit: BoxFit.contain,
-                                        ),
+                                    ? Stack(
+                                        children: [
+                                          // Icon
+                                          Padding(
+                                            padding: EdgeInsets.all(2.0),
+                                            child: SvgPicture.asset(
+                                              block.iconPath,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                          // Skill name overlay for better visibility
+                                          Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 1),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black.withOpacity(0.7),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft: Radius.circular(4),
+                                                  bottomRight: Radius.circular(4),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                block.name,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: blockSize * 0.15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       )
                                     : null,
                               );

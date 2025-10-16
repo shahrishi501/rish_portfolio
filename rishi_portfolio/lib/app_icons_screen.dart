@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:rishi_portfolio/widgets/about_me_screen_widget.dart';
 import 'package:rishi_portfolio/widgets/experience_page_widget.dart';
@@ -88,34 +89,40 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                         height: 200,
                         width: 200,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Colors.white70,
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
-                            image: AssetImage("assets/img/IMG_5178.JPG"),
+                            image: AssetImage("assets/img/aboutMe.png"),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Rishi Shah',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            // color: Colors.black.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Rishi Shah',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Software Engineer',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
+                                Text(
+                                  'Software Engineer',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -124,7 +131,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     Text(
                       'About Me',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
@@ -404,11 +411,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             height: 200,
                             width: 200,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
                               borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: AssetImage("assets/img/local.png"),
-                              ),
+                              color: Colors.white
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: SvgPicture.asset("assets/img/workingExp.svg", fit: BoxFit.contain,),
                             ),
                           ),
                         ),

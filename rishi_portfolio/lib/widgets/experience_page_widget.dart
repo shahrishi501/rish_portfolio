@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timelines_plus/timelines_plus.dart';
-import 'package:visibility_detector/visibility_detector.dart';
+import 'dart:math' as math;
 
 class ExperiencePageWidget extends StatefulWidget {
   const ExperiencePageWidget({super.key});
@@ -9,12 +8,11 @@ class ExperiencePageWidget extends StatefulWidget {
   State<ExperiencePageWidget> createState() => _ExperiencePageWidgetState();
 }
 
-class _ExperiencePageWidgetState extends State<ExperiencePageWidget>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final List<Animation<Offset>> _slideAnimations;
-  late final List<Animation<double>> _fadeAnimations;
-  late List<bool> _isVisible;
+class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
+  final FixedExtentScrollController _scrollController =
+      FixedExtentScrollController();
+  int _currentIndex = 0;
+  double _scrollOffset = 0;
 
   final List<Experience> experiences = [
     Experience(
@@ -23,165 +21,303 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget>
       duration: 'July 2025 - September 2025',
       description:
           'Built and optimized cross-platform UI components, integrated REST APIs, and improved app performance by 30%.',
+      number: '01',
     ),
     Experience(
-      company: 'Smallcase',
-      role: 'Software Engineering Intern',
-      duration: 'Jan 2025 - March 2025',
+      company: 'ThinkLocal.AI',
+      role: 'Lead App Developer Intern',
+      duration: 'Jan 2024 - May 2024',
       description:
-          'Worked on backend APIs for financial data and implemented Flutter screens for the investment dashboard.',
-    ),
-    Experience(
-      company: 'DJ Sanghvi Research Lab',
-      role: 'Machine Learning Intern',
-      duration: 'May 2024 - July 2024',
-      description:
-          'Developed credit risk prediction models using Python and deployed a research dashboard using Streamlit.',
+          'Drove mobile app feature development in collaboration with founders, integrating user-centric design principles and enhancing app performance by decreasing average load times by 35%. Engineered adaptive, component-driven app interfaces in Flutter, integrating Firebase, REST APIs, and Google places API to deliver performant, scalable, and iOS-optimized experiences. Proposed and developed core features like local discovery decks, discount integrations, and trending activities, boosting user engagement by 40%.',
+      number: '02',
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
-
-    _slideAnimations = List.generate(
-      experiences.length,
-      (i) =>
-          Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-            CurvedAnimation(
-              parent: _controller,
-              curve: Interval(i * 0.2, 1.0, curve: Curves.easeOut),
-            ),
-          ),
-    );
-
-    _fadeAnimations = List.generate(
-      experiences.length,
-      (i) => Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(
-          parent: _controller,
-          curve: Interval(i * 0.2, 1.0, curve: Curves.easeIn),
-        ),
-      ),
-    );
-
-    _isVisible = List.filled(experiences.length, false);
-    _controller.forward();
+    _scrollController.addListener(() {
+      setState(() {
+        _currentIndex = _scrollController.selectedItem;
+        if (_scrollController.position.hasContentDimensions) {
+          _scrollOffset = _scrollController.offset;
+        }
+      });
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onVisibilityChanged(int index, bool visible) {
-    if (visible && !_isVisible[index]) {
-      setState(() {
-        _isVisible[index] = true;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+      backgroundColor: const Color(0xFFF5F5F5),
+      body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                Center(
-                  child: Text(
-                    'Experience',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+            // Header
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const Expanded(
+                    child: Text(
+                      'EXPERIENCE',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.black),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.topLeft,
-              child: FixedTimeline.tileBuilder(
-                theme: TimelineThemeData(
-                  nodePosition: 0.02, // timeline stick to left
-                  color: Colors.grey.shade300,
-                  indicatorTheme: const IndicatorThemeData(size: 20.0),
-                  connectorTheme: const ConnectorThemeData(thickness: 2.5),
-                ),
-                builder: TimelineTileBuilder.connected(
-                  connectionDirection: ConnectionDirection.before,
-                  itemCount: experiences.length,
-                  contentsBuilder: (context, index) {
-                    final exp = experiences[index];
-                    return VisibilityDetector(
-                      key: Key('exp-$index'),
-                      onVisibilityChanged: (info) {
-                        if (info.visibleFraction > 0.3) {
-                          _onVisibilityChanged(index, true);
-                        }
-                      },
-                      child: AnimatedBuilder(
-                        animation: _controller,
-                        builder:
-                            (context, child) => AnimatedOpacity(
-                              opacity: _fadeAnimations[index].value,
-                              duration: const Duration(milliseconds: 300),
-                              child: AnimatedSlide(
-                                offset: _slideAnimations[index].value,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeOut,
-                                child: child,
-                              ),
-                            ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12, bottom: 16),
-                          child: ExperienceCard(exp: exp),
+            // Scrollable Experience Timeline
+            Expanded(
+              child: Stack(
+                children: [
+                  // Single continuous curved path
+                  Positioned.fill(
+                    child: ClipRect(
+                      child: CustomPaint(
+                        painter: SingleCurvedPathPainter(
+                          itemCount: experiences.length,
+                          currentIndex: _currentIndex,
+                          scrollOffset: _scrollOffset,
                         ),
                       ),
-                    );
-                  },
-                  indicatorBuilder: (_, index) {
-                    final active = _isVisible[index];
-                    return DotIndicator(
-                      size: 25,
-                      color: active ? Colors.blueAccent : Colors.grey.shade300,
-                      child: Icon(
-                        Icons.work,
-                        size: 16,
-                        color: active ? Colors.white : Colors.grey.shade600,
-                      ),
-                    );
-                  },
-                  connectorBuilder:
-                      (_, index, ___) => SolidLineConnector(
-                        color:
-                            _isVisible[index]
-                                ? Colors.blueAccent
-                                : Colors.grey.shade300,
-                        thickness: 2.5,
-                      ),
-                ),
+                    ),
+                  ),
+                  // ListWheelScrollView for circular scrolling
+                  ListWheelScrollView.useDelegate(
+                    controller: _scrollController,
+                    itemExtent: screenHeight * 0.6,
+                    diameterRatio: 2.0,
+                    perspective: 0.002,
+                    offAxisFraction: 0.5,
+                    physics: const FixedExtentScrollPhysics(),
+                    childDelegate: ListWheelChildBuilderDelegate(
+                      childCount: experiences.length,
+                      builder: (context, index) {
+                        return _buildExperienceItem(index);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildExperienceItem(int index) {
+    final exp = experiences[index];
+    final isActive = _currentIndex == index;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Number indicator
+          SizedBox(
+            width: 100,
+            child: Text(
+              exp.number,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: isActive ? 70 : 50,
+                fontWeight: FontWeight.w900,
+                color: isActive ? Colors.black : Colors.grey.shade300,
+                height: 0.9,
+              ),
+            ),
+          ),
+          const SizedBox(width: 40),
+          // Experience Card
+          Expanded(
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: isActive ? 1.0 : 0.3,
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 300),
+                scale: isActive ? 1.0 : 0.85,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(isActive ? 0.15 : 0.05),
+                        blurRadius: isActive ? 16 : 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        exp.role,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          height: 1.3,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        exp.company,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        exp.duration,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade600,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        exp.description,
+                        style: TextStyle(
+                          fontSize: 14,
+                          height: 1.5,
+                          color: Colors.grey.shade800,
+                        ),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SingleCurvedPathPainter extends CustomPainter {
+  final int itemCount;
+  final int currentIndex;
+  final double scrollOffset;
+
+  SingleCurvedPathPainter({
+    required this.itemCount,
+    required this.currentIndex,
+    required this.scrollOffset,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final inactivePaint = Paint()
+      ..color = Colors.grey.shade300
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke;
+
+    final activePaint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke;
+
+    final dotPaint = Paint()..style = PaintingStyle.fill;
+
+    // Push the circle to start from inside the left edge
+    final topY = size.height * 0.15;
+    final bottomY = size.height * 0.85;
+    final totalHeight = bottomY - topY;
+    final radius = totalHeight / 2;
+    final centerY = topY + radius;
+    
+    // Position circle center to the left of screen edge
+    final centerX = -radius * 0.6; // Push center further left
+    
+    // Create the curved path that starts from left edge
+    final path = Path();
+    
+    // Start from the top-left position (first item position)
+    final startAngle = math.acos(-centerX / radius); // Angle where x = 0 (left edge)
+    final endAngle = math.pi - startAngle; // Symmetric bottom position
+    
+    // Calculate starting position (top of the arc at left edge)
+    final startX = 0.0;
+    final startY = centerY - radius * math.sin(startAngle);
+    
+    path.moveTo(startX, startY);
+    
+    // Create arc from top-left to bottom-left
+    final rect = Rect.fromCenter(
+      center: Offset(centerX, centerY),
+      width: radius * 2,
+      height: radius * 2,
+    );
+    
+    // Arc from start angle to end angle (going clockwise)
+    path.arcTo(rect, -startAngle, endAngle - (-startAngle), false);
+
+    // Draw the full path (inactive color)
+    canvas.drawPath(path, inactivePaint);
+
+    // Draw active portion of path
+    final pathMetrics = path.computeMetrics().first;
+    final activeLength = pathMetrics.length * (currentIndex / (itemCount - 1));
+    final activePath = pathMetrics.extractPath(0, activeLength);
+    canvas.drawPath(activePath, activePaint);
+
+    // Draw dots at each experience position along the arc
+    for (int i = 0; i < itemCount; i++) {
+      final progress = i / (itemCount - 1);
+      
+      // Calculate position along the arc (from start to end angle)
+      final angle = -startAngle + (endAngle - (-startAngle)) * progress;
+      final x = centerX + radius * math.cos(angle);
+      final y = centerY + radius * math.sin(angle);
+      
+      final isActive = i <= currentIndex;
+      dotPaint.color = isActive ? Colors.black : Colors.grey.shade400;
+      
+      canvas.drawCircle(
+        Offset(x, y),
+        isActive ? 6 : 5,
+        dotPaint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(SingleCurvedPathPainter oldDelegate) {
+    return oldDelegate.currentIndex != currentIndex ||
+        oldDelegate.scrollOffset != scrollOffset;
   }
 }
 
@@ -190,65 +326,13 @@ class Experience {
   final String role;
   final String duration;
   final String description;
+  final String number;
 
   Experience({
     required this.company,
     required this.role,
     required this.duration,
     required this.description,
+    required this.number,
   });
-}
-
-class ExperienceCard extends StatelessWidget {
-  final Experience exp;
-  const ExperienceCard({super.key, required this.exp});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      shadowColor: Colors.blue.withOpacity(0.2),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              exp.role,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                height: 1.3,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              exp.company,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.blueAccent,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              exp.duration,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade700,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              exp.description,
-              style: const TextStyle(fontSize: 15, height: 1.4),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
