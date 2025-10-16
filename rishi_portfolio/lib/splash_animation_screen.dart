@@ -98,23 +98,30 @@ void _animateNextLanguage() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child:
-            _paths.isEmpty
-                ? const CircularProgressIndicator(color: Colors.white)
-                : AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, _) {
-                    return CustomPaint(
-                      size: const Size(500, 300),
-                      painter: _HelloPainter(
-                        paths: _paths,
-                        progress: Curves.easeInOut.transform(_controller.value),
-                      ),
-                    );
-                  },
-                ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color(0xFF108dc7),
+            Color(0xFFef8e38)
+          ])
+        ),
+        child: Center(
+          child:
+              _paths.isEmpty
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, _) {
+                      return CustomPaint(
+                        size: const Size(500, 300),
+                        painter: _HelloPainter(
+                          paths: _paths,
+                          progress: Curves.easeInOut.transform(_controller.value),
+                        ),
+                      );
+                    },
+                  ),
+        ),
       ),
     );
   }
@@ -182,7 +189,7 @@ class _HelloPainter extends CustomPainter {
     final paint =
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2.8
+          ..strokeWidth = 4.5
           ..strokeCap = StrokeCap.round
           ..color = Colors.white;
 
