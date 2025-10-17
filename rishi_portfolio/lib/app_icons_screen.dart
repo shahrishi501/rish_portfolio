@@ -10,7 +10,6 @@ import 'package:rishi_portfolio/widgets/project_page_widget.dart';
 import 'package:rishi_portfolio/widgets/skills_tetris_game_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class PortfolioWidget extends StatelessWidget {
   const PortfolioWidget({super.key});
 
@@ -18,9 +17,7 @@ class PortfolioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (context) => PortfolioHomePage(),
-        );
+        return MaterialPageRoute(builder: (context) => PortfolioHomePage());
       },
     );
   }
@@ -89,10 +86,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                         height: 200,
                         width: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white70,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
-                            image: AssetImage("assets/img/aboutMe.png"),
+                            image: AssetImage("assets/img/aboutMe.png", ),
+                            fit: BoxFit.cover,
+                            alignment: AlignmentGeometry.topCenter
                           ),
                         ),
                         child: Container(
@@ -106,6 +105,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                
                                 Text(
                                   'Rishi Shah',
                                   style: TextStyle(
@@ -340,8 +340,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            SkillsTetrisGame(),
+                                        builder:
+                                            (context) => SkillsTetrisGame(),
                                       ),
                                     );
                                   },
@@ -369,8 +369,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProjectPageWidget(),
+                                        builder:
+                                            (context) => ProjectPageWidget(),
                                       ),
                                     );
                                   },
@@ -402,8 +402,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ExperiencePageWidget(),
+                                builder: (context) => ExperiencePageWidget(),
                               ),
                             );
                           },
@@ -412,11 +411,14 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             width: 200,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.white
+                              color: Colors.white,
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: SvgPicture.asset("assets/img/workingExp.svg", fit: BoxFit.contain,),
+                              child: SvgPicture.asset(
+                                "assets/img/workingExp.svg",
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
@@ -534,9 +536,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           position: Tween(
             begin: Offset(1, 0),
             end: Offset(0, 0),
-          ).animate(
-            CurvedAnimation(parent: anim1, curve: Curves.easeOut),
-          ),
+          ).animate(CurvedAnimation(parent: anim1, curve: Curves.easeOut)),
           child: child,
         );
       },
@@ -630,9 +630,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           position: Tween(
             begin: Offset(1, 0),
             end: Offset(0, 0),
-          ).animate(
-            CurvedAnimation(parent: anim1, curve: Curves.easeOut),
-          ),
+          ).animate(CurvedAnimation(parent: anim1, curve: Curves.easeOut)),
           child: child,
         );
       },
@@ -650,10 +648,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -679,26 +674,24 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: technologies.map((tech) {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Colors.blue.withOpacity(0.5),
-                    width: 1,
-                  ),
-                ),
-                child: Text(
-                  tech,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
-                ),
-              );
-            }).toList(),
+            children:
+                technologies.map((tech) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.blue.withOpacity(0.5),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      tech,
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                  );
+                }).toList(),
           ),
           SizedBox(height: 16),
           InkWell(
@@ -710,11 +703,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             },
             child: Row(
               children: [
-                Icon(
-                  Bootstrap.github,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                Icon(Bootstrap.github, color: Colors.white, size: 16),
                 SizedBox(width: 8),
                 Text(
                   'View on GitHub',
@@ -743,10 +732,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -921,4 +907,3 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 }
-
