@@ -23,7 +23,6 @@ class PortfolioWidget extends StatelessWidget {
   }
 }
 
-// Home Page
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
 
@@ -309,7 +308,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                     height: 70,
                                     width: 70,
                                     decoration: BoxDecoration(
-                                      color: Colors.blue,
+                                      color: Colors.black,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Icon(

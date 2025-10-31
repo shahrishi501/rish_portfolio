@@ -30,7 +30,7 @@ class ProjectPageWidget extends StatelessWidget {
           imageUrl: 'assets/icons/svkm_educonnect.png',
           accentColor: Color(0xFF6366F1),
           role: 'Full Stack Developer',
-          year: '2024',
+          year: '2025',
           technologies: ['Flutter', 'Firebase', 'Node.js'],
         ),
         Project(
@@ -40,7 +40,7 @@ class ProjectPageWidget extends StatelessWidget {
           accentColor: Color(0xFF8B5CF6),
           role: 'Mobile Developer',
           year: '2024',
-          technologies: ['Flutter', 'SQLite', 'ML Kit'],
+          technologies: ['Flutter', 'MySQL', 'Firebase', 'VertexAI', 'Django', 'Cloudinary'],
         ),
         Project(
           name: "UniStay",
@@ -48,8 +48,8 @@ class ProjectPageWidget extends StatelessWidget {
           imageUrl: 'assets/icons/image 3.png',
           accentColor: Color(0xFFEC4899),
           role: 'Lead Developer',
-          year: '2023',
-          technologies: ['Flutter', 'REST API', 'Maps'],
+          year: '2025',
+          technologies: ['Flutter', 'Golang', 'PostgreSQL', 'Figma',],
         ),
         Project(
           name: "YouBook",
@@ -65,7 +65,7 @@ class ProjectPageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0A0A),
+      backgroundColor: Colors.black,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
