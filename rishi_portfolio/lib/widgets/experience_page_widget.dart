@@ -9,8 +9,7 @@ class ExperiencePageWidget extends StatefulWidget {
 }
 
 class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
-  final FixedExtentScrollController _scrollController =
-      FixedExtentScrollController();
+  final FixedExtentScrollController _scrollController = FixedExtentScrollController();
   int _currentIndex = 0;
   double _scrollOffset = 0;
 
@@ -19,17 +18,29 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
       company: '021 Trade',
       role: 'Flutter Developer Intern',
       duration: 'July 2025 - September 2025',
-      description:
-          'Built and optimized cross-platform UI components, integrated REST APIs, and improved app performance by 30%.',
+      description: [
+        'Built and optimized cross-platform UI components.',
+        'Integrated REST APIs.',
+        'Improved app performance by 30%.',
+      ],
       number: '01',
+      websiteURL: 'https://www.021.trade/',
+      deployedURL: 'https://play.google.com/store/apps/details?id=com.zerotwoonetrade.carbon',
+      linkedInURL: 'https://www.linkedin.com/company/021-trade/posts/?feedView=all'
     ),
     Experience(
       company: 'ThinkLocal.AI',
       role: 'Lead App Developer Intern',
       duration: 'Jan 2024 - May 2024',
-      description:
-          'Drove mobile app feature development in collaboration with founders, integrating user-centric design principles and enhancing app performance by decreasing average load times by 35%. Engineered adaptive, component-driven app interfaces in Flutter, integrating Firebase, REST APIs, and Google places API to deliver performant, scalable, and iOS-optimized experiences. Proposed and developed core features like local discovery decks, discount integrations, and trending activities, boosting user engagement by 40%.',
+      description: [
+        'Drove mobile app feature development in collaboration with founders.',
+        'Integrated Firebase, REST APIs, and Google Places API.',
+        'Proposed and developed core features like local discovery decks.',
+        'Boosted user engagement by 40%.',
+      ],
       number: '02',
+      websiteURL: '',
+      linkedInURL: 'https://www.linkedin.com/company/thinklocalnow/posts/?feedView=all'
     ),
   ];
 
@@ -55,7 +66,7 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
@@ -65,6 +76,7 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
@@ -81,10 +93,7 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.close, color: Colors.black),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  const SizedBox(width: 48), 
                 ],
               ),
             ),
@@ -92,7 +101,6 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
             Expanded(
               child: Stack(
                 children: [
-                  // Single continuous curved path
                   Positioned.fill(
                     child: ClipRect(
                       child: CustomPaint(
@@ -190,9 +198,9 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
                       Text(
                         exp.company,
                         style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -205,15 +213,35 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Text(
-                        exp.description,
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.5,
-                          color: Colors.grey.shade800,
-                        ),
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: exp.description.map((point) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '• ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    point,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      height: 1.5,
+                                      color: Colors.grey.shade800,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),
@@ -240,15 +268,17 @@ class SingleCurvedPathPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final inactivePaint = Paint()
-      ..color = Colors.grey.shade300
-      ..strokeWidth = 2.5
-      ..style = PaintingStyle.stroke;
+    final inactivePaint =
+        Paint()
+          ..color = Colors.grey.shade300
+          ..strokeWidth = 2.5
+          ..style = PaintingStyle.stroke;
 
-    final activePaint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 2.5
-      ..style = PaintingStyle.stroke;
+    final activePaint =
+        Paint()
+          ..color = Colors.black
+          ..strokeWidth = 2.5
+          ..style = PaintingStyle.stroke;
 
     final dotPaint = Paint()..style = PaintingStyle.fill;
 
@@ -258,30 +288,32 @@ class SingleCurvedPathPainter extends CustomPainter {
     final totalHeight = bottomY - topY;
     final radius = totalHeight / 2;
     final centerY = topY + radius;
-    
+
     // Position circle center to the left of screen edge
     final centerX = -radius * 0.6; // Push center further left
-    
+
     // Create the curved path that starts from left edge
     final path = Path();
-    
+
     // Start from the top-left position (first item position)
-    final startAngle = math.acos(-centerX / radius); // Angle where x = 0 (left edge)
+    final startAngle = math.acos(
+      -centerX / radius,
+    ); // Angle where x = 0 (left edge)
     final endAngle = math.pi - startAngle; // Symmetric bottom position
-    
+
     // Calculate starting position (top of the arc at left edge)
     final startX = 0.0;
     final startY = centerY - radius * math.sin(startAngle);
-    
+
     path.moveTo(startX, startY);
-    
+
     // Create arc from top-left to bottom-left
     final rect = Rect.fromCenter(
       center: Offset(centerX, centerY),
       width: radius * 2,
       height: radius * 2,
     );
-    
+
     // Arc from start angle to end angle (going clockwise)
     path.arcTo(rect, -startAngle, endAngle - (-startAngle), false);
 
@@ -297,20 +329,16 @@ class SingleCurvedPathPainter extends CustomPainter {
     // Draw dots at each experience position along the arc
     for (int i = 0; i < itemCount; i++) {
       final progress = i / (itemCount - 1);
-      
+
       // Calculate position along the arc (from start to end angle)
       final angle = -startAngle + (endAngle - (-startAngle)) * progress;
       final x = centerX + radius * math.cos(angle);
       final y = centerY + radius * math.sin(angle);
-      
+
       final isActive = i <= currentIndex;
       dotPaint.color = isActive ? Colors.black : Colors.grey.shade400;
-      
-      canvas.drawCircle(
-        Offset(x, y),
-        isActive ? 6 : 5,
-        dotPaint,
-      );
+
+      canvas.drawCircle(Offset(x, y), isActive ? 6 : 5, dotPaint);
     }
   }
 
@@ -325,8 +353,11 @@ class Experience {
   final String company;
   final String role;
   final String duration;
-  final String description;
+  final List<String> description;
   final String number;
+  final String? websiteURL;
+  final String? deployedURL;
+  final String? linkedInURL;
 
   Experience({
     required this.company,
@@ -334,5 +365,8 @@ class Experience {
     required this.duration,
     required this.description,
     required this.number,
+    this.websiteURL,
+    this.deployedURL,
+    this.linkedInURL,
   });
 }

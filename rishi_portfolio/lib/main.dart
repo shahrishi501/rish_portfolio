@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rishi_portfolio/home_screen.dart';
 import 'package:rishi_portfolio/splash_animation_screen.dart';
+import 'package:rishi_portfolio/utils/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,14 +11,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Rishi\'s Portfolio',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        
-        fontFamily: 'Inter'),
-      home: HelloAnimationFixed(),
-      debugShowCheckedModeBanner: false,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeNotifier.themeMode,
+      builder: (context, themeMode, child) {
+        return MaterialApp(
+          title: 'Rishi\'s Portfolio',
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: ThemeNotifier.themeMode.value,
+          home: HelloAnimationFixed(),
+          debugShowCheckedModeBanner: false,
+        );
+      }
     );
   }
 }

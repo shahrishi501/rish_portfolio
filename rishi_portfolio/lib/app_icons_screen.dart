@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:rishi_portfolio/utils/theme.dart';
 import 'package:rishi_portfolio/widgets/about_me_screen_widget.dart';
 import 'package:rishi_portfolio/widgets/experience_page_widget.dart';
 import 'package:rishi_portfolio/widgets/get_in_touch_widget.dart';
@@ -85,7 +86,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                         height: 200,
                         width: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
                             image: AssetImage("assets/img/aboutMe.png", ),
@@ -110,14 +111,14 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                   ),
                                 ),
                                 Text(
                                   'Software Engineer',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.black,
+                                    color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                   ),
                                 ),
                               ],
@@ -145,24 +146,31 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       children: [
                         Column(
                           children: [
-                            Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Icon(
-                                BoxIcons.bxs_brightness,
-                                color: Colors.white,
-                                size: 50,
+                            InkWell(
+                              onTap: () {
+                                ThemeNotifier.toggleTheme();
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Icon(
+                                  ThemeNotifier.themeMode.value == ThemeMode.light
+                                      ? BoxIcons.bxs_sun
+                                      : BoxIcons.bxs_moon,
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                  size: 50,
+                                ),
                               ),
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Dark Mode',
+                              ThemeNotifier.themeMode.value == ThemeMode.light ? 'Light Mode' : 'Dark Mode',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
@@ -175,12 +183,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               height: 70,
                               width: 70,
                               decoration: BoxDecoration(
-                                color: Colors.black,
+                                color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Icon(
                                 BoxIcons.bxs_contact,
-                                color: Colors.white,
+                                color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                 size: 50,
                               ),
                             ),
@@ -188,7 +196,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             Text(
                               'Contact',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
@@ -218,7 +226,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             Text(
                               'X',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
@@ -233,12 +241,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 height: 70,
                                 width: 70,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF0072B1),
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Color(0xFF0072B1) : Colors.black,
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: Icon(
                                   Bootstrap.linkedin,
-                                  color: Colors.white,
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Color(0xFF0072B1),
                                   size: 40,
                                 ),
                               ),
@@ -247,7 +255,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             Text(
                               'LinkedIn',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
@@ -259,7 +267,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 ),
               ],
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -279,7 +287,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                     height: 70,
                                     width: 70,
                                     decoration: BoxDecoration(
-                                      color: Colors.black,
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Color(0xFF6e5494) : Colors.black,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Icon(
@@ -293,7 +301,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 Text(
                                   'GitHub',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -307,14 +315,19 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   child: Container(
                                     height: 70,
                                     width: 70,
+                                    padding: EdgeInsets.all(10.0),
                                     decoration: BoxDecoration(
-                                      color: Colors.black,
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
-                                    child: Icon(
-                                      BoxIcons.bx_notepad,
-                                      color: Colors.white,
-                                      size: 30,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/resume.svg",
+                                      colorFilter: ColorFilter.mode(
+                                        ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                        BlendMode.srcIn,
+                                      ),
+                                      height: 30,
+                                      width: 30,
                                     ),
                                   ),
                                 ),
@@ -322,7 +335,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 Text(
                                   'Resume',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -348,14 +361,14 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                     height: 70,
                                     width: 70,
                                     decoration: _folderBoxDecoration(),
-                                    child: _blurredIcon(Icons.person),
+                                    child: _blurredIcon(Bootstrap.wrench),
                                   ),
                                 ),
                                 SizedBox(height: 8),
                                 Text(
                                   'Skills',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -384,7 +397,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 Text(
                                   'Projects',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -410,7 +423,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                             width: 200,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
+                              color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.grey[800],
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
@@ -882,13 +895,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   BoxDecoration _folderBoxDecoration() {
     return BoxDecoration(
-      color: Colors.white.withOpacity(0.2),
+      color: Colors.white.withOpacity(0.6),
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: Colors.white.withOpacity(0.3), width: 0.5),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1),
-          blurRadius: 10,
+          blurRadius: 8,
           spreadRadius: 1,
         ),
       ],

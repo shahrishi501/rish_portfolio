@@ -254,7 +254,7 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                       ),
                       Icon(
                         isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                        color: widget.project.accentColor,
+                        color: Colors.white,
                         size: 28,
                       ),
                     ],
@@ -263,7 +263,7 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                   Text(
                     widget.project.role,
                     style: TextStyle(
-                      color: widget.project.accentColor,
+                      color: Colors.white,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -307,19 +307,17 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: widget.project.accentColor
-                                          .withOpacity(0.15),
+                                      color: Colors.white.withOpacity(0.15),
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: widget.project.accentColor
-                                            .withOpacity(0.3),
+                                        color: Colors.white.withOpacity(0.3),
                                         width: 1,
                                       ),
                                     ),
                                     child: Text(
                                       tech,
                                       style: TextStyle(
-                                        color: widget.project.accentColor,
+                                        color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -336,9 +334,9 @@ class _ModernProjectCardState extends State<ModernProjectCard> {
                                 icon: Icon(Icons.launch, size: 18),
                                 label: Text('View Details'),
                                 style: OutlinedButton.styleFrom(
-                                  foregroundColor: widget.project.accentColor,
+                                  foregroundColor: Colors.white,
                                   side: BorderSide(
-                                    color: widget.project.accentColor.withOpacity(0.5),
+                                    color: Colors.white.withOpacity(0.5),
                                   ),
                                   padding: EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(
