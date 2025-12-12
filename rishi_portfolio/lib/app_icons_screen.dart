@@ -34,7 +34,7 @@ class PortfolioHomePage extends StatefulWidget {
 class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Future<void> _launchResume() async {
     final Uri url = Uri.parse(
-      'https://drive.google.com/file/d/1HhdpdQRvbId-Ona_j9S8vUWy_FpjsBLH/view?usp=sharing',
+      'https://drive.google.com/file/d/1NFMLIdBV8Wg3jwt8JKdKVZmI13PM-y_W/view?usp=sharing',
     );
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');

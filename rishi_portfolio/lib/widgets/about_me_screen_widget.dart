@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:flutter_svg/svg.dart';
 
-// About Me Page with Shuffling Cards
+// About Me Page with Expandable Sections
 class AboutMePage extends StatefulWidget {
   const AboutMePage({super.key});
 
@@ -9,122 +9,65 @@ class AboutMePage extends StatefulWidget {
   State<AboutMePage> createState() => _AboutMePageState();
 }
 
-class _AboutMePageState extends State<AboutMePage> with TickerProviderStateMixin {
-  int currentCardIndex = 0;
-  late AnimationController _controller;
-  late Animation<Offset> _slideAnimation;
-  
-  final List<CardData> cards = [
-    CardData(
-      title: 'Hi, I\'m Rishi Shah! 👋',
-      content: 'Software Engineer passionate about creating beautiful and functional mobile applications.',
-      icon: Icons.person,
-      gradient: [Color(0xFF6366F1), Color(0xFF9333EA)],
-      hasImage: true,
-    ),
-    CardData(
-      title: 'What I Do',
-      content: 'I specialize in mobile app development with Flutter and cross-platform solutions. I love building applications that solve real-world problems.',
-      icon: Icons.code,
-      gradient: [Color(0xFF9333EA), Color(0xFFEC4899)],
-    ),
-    CardData(
-      title: 'My Passion',
-      content: 'I enjoy working on innovative projects that challenge me to learn and grow. When I\'m not coding, you can find me exploring new technologies.',
-      icon: Icons.lightbulb,
-      gradient: [Color(0xFFEC4899), Color(0xFFEF4444)],
-    ),
-    CardData(
-      title: 'Tech Stack',
-      content: '',
-      icon: Icons.laptop_mac,
-      gradient: [Color(0xFF10B981), Color(0xFF14B8A6)],
-      interests: ['Mobile Development', 'Flutter', 'UI/UX Design', 'Cloud Computing', 'AI & ML', 'Problem Solving'],
-    ),
-    CardData(
-      title: 'Location',
-      content: 'Mumbai, India 🇮🇳',
-      icon: Icons.location_on,
-      gradient: [Color(0xFFF97316), Color(0xFFFBBF24)],
-    ),
-    CardData(
-      title: 'Education',
-      content: 'Computer Science Graduate with a passion for continuous learning and innovation.',
-      icon: Icons.school,
-      gradient: [Color(0xFF6366F1), Color(0xFF3B82F6)],
-    ),
-    CardData(
-      title: 'Let\'s Connect!',
-      content: 'rishi@example.com',
-      subcontent: 'Always open to exciting opportunities and collaborations.',
-      icon: Icons.email,
-      gradient: [Color(0xFF06B6D4), Color(0xFF3B82F6)],
-    ),
+class _AboutMePageState extends State<AboutMePage> {
+  Set<int> expandedSections = {};
+
+  void toggleSection(int index) {
+    setState(() {
+      if (expandedSections.contains(index)) {
+        expandedSections.remove(index);
+      } else {
+        expandedSections.add(index);
+      }
+    });
+  }
+
+  final List<TechStackItem> techStackItems = [
+    TechStackItem(name: 'Flutter', iconPath: 'assets/skill-icons/flutter.svg'),
+    TechStackItem(name: 'Firebase', iconPath: 'assets/skill-icons/firebase.svg',),
+    TechStackItem(name: 'C', iconPath: 'assets/skill-icons/c.svg'),
+    TechStackItem(name: 'C++', iconPath: 'assets/skill-icons/cpp.svg'),
+    TechStackItem(name: 'Go', iconPath: 'assets/skill-icons/go.svg'),
+    TechStackItem(name: 'MongoDB', iconPath: 'assets/skill-icons/mongodb.svg'),
+    TechStackItem(name: 'PostgreSQL', iconPath: 'assets/skill-icons/postgresql.svg',),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _nextCard() {
-    if (currentCardIndex < cards.length - 1) {
-      setState(() {
-        _slideAnimation = Tween<Offset>(
-          begin: Offset.zero,
-          end: Offset(-1.5, 0),
-        ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-      });
-      
-      _controller.forward().then((_) {
-        setState(() {
-          currentCardIndex++;
-        });
-        _controller.reset();
-      });
-    }
-  }
-
-  void _previousCard() {
-    if (currentCardIndex > 0) {
-      setState(() {
-        _slideAnimation = Tween<Offset>(
-          begin: Offset.zero,
-          end: Offset(1.5, 0),
-        ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-      });
-      
-      _controller.forward().then((_) {
-        setState(() {
-          currentCardIndex--;
-        });
-        _controller.reset();
-      });
-    }
-  }
+  final List<SectionData> sections = [
+    SectionData(
+      title: 'Introduction',
+      content: 'Hi, I’m Rishi Shah!\n\nA software engineer passionate about building clean, functional, and user-friendly mobile apps. \n\nWhen I’m not coding, I’m usually discovering new music or curating playlists that keep me inspired.\n\nYou’ll also find me exploring cafés, observing their atmosphere, and enjoying the stories each space carries.',
+      type: SectionType.text
+    ),
+    SectionData(
+      title: 'What I Do',
+      content: 'I specialize in mobile app development using Flutter, creating cross-platform solutions that are fast, scalable, and user-friendly.\n\nI enjoy building applications that solve real-world problems with clean code and thoughtful design.',
+      type: SectionType.text
+    ),
+    SectionData(
+      title: 'Tech Stack',
+      content: 'Flutter • Dart • Firebase • REST APIs • Git\nUI/UX Design • Mobile Development\nCloud Computing • AI & ML',
+      type: SectionType.techStack,
+    ),
+    SectionData(
+      title: 'Location',
+      content: '📍 Mumbai, India 🇮🇳\n\nOpen to remote opportunities and collaborations worldwide.',
+      type: SectionType.text,
+    ),
+    SectionData(
+      title: 'Education',
+      content: '🎓 B.Tech in Computer Engineering – DJ Sanghvi College of Engineering, Mumbai, Maharashtra \n\nExpected Graduation: May 2026',
+      type: SectionType.text,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF000000), Color(0xFF1a1a1a)],
         ),
       ),
       child: Scaffold(
@@ -134,61 +77,63 @@ class _AboutMePageState extends State<AboutMePage> with TickerProviderStateMixin
             children: [
               // Custom AppBar
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 24,
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
+                    SizedBox(width: 4),
                     Text(
                       'About Me',
                       style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
                       ),
                     ),
                   ],
                 ),
               ),
-              
-              // Card Stack
-              Expanded(
-                child: GestureDetector(
-                  onHorizontalDragEnd: (details) {
-                    if (details.primaryVelocity! < 0) {
-                      _nextCard();
-                    } else if (details.primaryVelocity! > 0) {
-                      _previousCard();
-                    }
-                  },
-                  child: Center(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Background cards for depth effect
-                        if (currentCardIndex < cards.length - 1)
-                          Transform.scale(
-                            scale: 0.9,
-                            child: Opacity(
-                              opacity: 0.5,
-                              child: _buildCard(cards[currentCardIndex + 1], false),
-                            ),
-                          ),
-                        
-                        // Current card with animation
-                        SlideTransition(
-                          position: _slideAnimation,
-                          child: _buildCard(cards[currentCardIndex], true),
-                        ),
-                      ],
+
+              // Profile Image
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Container(
+                  height: 250,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage("assets/img/IMG_5179.jpg"),
+                      fit: BoxFit.cover,
+                      alignment: Alignment(0, -0.3),
                     ),
                   ),
                 ),
               ),
-              
-              SizedBox(height: 40),
+
+              SizedBox(height: 10),
+
+              // Expandable Sections
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: sections.length,
+                  itemBuilder: (context, index) {
+                    return _buildExpandableSection(
+                      sections[index],
+                      index,
+                      expandedSections.contains(index),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -196,226 +141,146 @@ class _AboutMePageState extends State<AboutMePage> with TickerProviderStateMixin
     );
   }
 
-  Widget _buildCard(CardData cardData, bool isInteractive) {
+  Widget _buildExpandableSection(
+    SectionData section,
+    int index,
+    bool isExpanded,
+  ) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      height: MediaQuery.of(context).size.height * 0.65,
+      margin: EdgeInsets.only(bottom: 1),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: cardData.gradient,
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 20,
-            spreadRadius: 5,
-          ),
-        ],
+        border: Border(bottom: BorderSide(color: Colors.white, width: 1)),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Stack(
-          children: [
-            // Background pattern
-            Positioned.fill(
-              child: Opacity(
-                opacity: 0.1,
-                child: CustomPaint(
-                  painter: GridPatternPainter(),
-                ),
-              ),
-            ),
-            
-            // Content
-            Padding(
-              padding: EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () => toggleSection(index),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Profile image for first card
-                  if (cardData.hasImage)
-                    Center(
-                      child: Container(
-                        height: 140,
-                        width: 140,
-                        margin: EdgeInsets.only(bottom: 24, top: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          image: DecorationImage(
-                            image: AssetImage("assets/img/IMG_5178.JPG"),
-                            fit: BoxFit.cover,
-                          ),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 3,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 15,
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  else
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      margin: EdgeInsets.only(bottom: 20, top: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Icon(
-                        cardData.icon,
-                        color: Colors.white,
-                        size: 40,
-                      ),
-                    ),
-                  
-                  // Title
                   Text(
-                    cardData.title,
+                    section.title,
                     style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
-                  
-                  // Content
-                  if (cardData.content.isNotEmpty)
-                    Text(
-                      cardData.content,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white.withOpacity(0.95),
-                        height: 1.6,
-                      ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      shape: BoxShape.circle,
                     ),
-                  
-                  // Subcontent
-                  if (cardData.subcontent != null) ...[
-                    SizedBox(height: 12),
-                    Text(
-                      cardData.subcontent!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.8),
-                        fontStyle: FontStyle.italic,
-                      ),
+                    child: Icon(
+                      isExpanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                      color: Colors.white,
+                      size: 24,
                     ),
-                  ],
-                  
-                  // Interests/Skills
-                  if (cardData.interests != null) ...[
-                    SizedBox(height: 16),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: cardData.interests!
-                          .map((interest) => Container(
-                                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.25),
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.white.withOpacity(0.4),
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: Text(
-                                  interest,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  ],
-                  
-                  Spacer(),
-                  
-                  // Swipe instruction
-                  if (isInteractive)
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.swipe,
-                            color: Colors.white.withOpacity(0.6),
-                            size: 20,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            'Swipe to explore',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          AnimatedCrossFade(
+            firstChild: Container(),
+            secondChild: Padding(
+              padding: EdgeInsets.only(left: 8, right: 8, bottom: 20),
+              child: section.type == SectionType.techStack
+                  ? _buildTechStackGrid()
+                  :
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  section.content,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    height: 1.6,
+                  ),
+                ),
+              ),
+            ),
+            crossFadeState:
+                isExpanded
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+            duration: Duration(milliseconds: 300),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildTechStackGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 1,
+      ),
+      itemCount: techStackItems.length,
+      itemBuilder: (context, index) {
+        return _buildTechStackItem(techStackItems[index]);
+      },
+    );
+  }
+
+  Widget _buildTechStackItem(TechStackItem item) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 50,
+          height: 50,
+          padding: EdgeInsets.all(8),
+          child: SvgPicture.asset(
+            item.iconPath,
+            fit: BoxFit.contain,
+          ),
+        ),
+        SizedBox(height: 6),
+        Text(
+          item.name,
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.8),
+            fontSize: 12,
+          ),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
   }
 }
 
-class CardData {
+
+enum SectionType { text, techStack }
+
+class SectionData {
   final String title;
   final String content;
-  final String? subcontent;
-  final IconData icon;
-  final List<Color> gradient;
-  final List<String>? interests;
-  final bool hasImage;
+  final SectionType type;
 
-  CardData({
+  SectionData({
     required this.title,
     required this.content,
-    this.subcontent,
-    required this.icon,
-    required this.gradient,
-    this.interests,
-    this.hasImage = false,
+    this.type = SectionType.text,
   });
 }
 
-class GridPatternPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
+class TechStackItem {
+  final String name;
+  final String iconPath;
 
-    const spacing = 30.0;
-    
-    for (double i = 0; i < size.width; i += spacing) {
-      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
-    }
-    
-    for (double i = 0; i < size.height; i += spacing) {
-      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  TechStackItem({required this.name, required this.iconPath});
 }

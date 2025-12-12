@@ -130,6 +130,15 @@ class _ExperiencePageWidgetState extends State<ExperiencePageWidget> {
                 ],
               ),
             ),
+
+            Text(
+              'Swipe up to view more experiences',
+              style: TextStyle(
+                color: Color(0xFF7F7878),
+                fontSize: 14,
+                fontWeight: FontWeight.w600
+              ),
+            ),
           ],
         ),
       ),
