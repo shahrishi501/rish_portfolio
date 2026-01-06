@@ -36,9 +36,9 @@ class ProjectPageWidget extends StatelessWidget {
       description: 'Educational Platform connecting students with resources and learning materials.',
       imageUrl: 'assets/icons/svkm_educonnect.png',
       accentColor: Color(0xFF6366F1),
-      role: 'Full- Stack Developer',
+      role: 'Project Lead, Mobile Developer, UI/UX Designer',
       year: '2025',
-      technologies: ['Flutter', 'Firebase', 'Node.js'],
+      technologies: ['Flutter', 'Firebase', 'Node.js', 'AWS', 'MongoDB'],
       problem: '',
       solution: '',
       solutionScreens: [
@@ -51,11 +51,10 @@ class ProjectPageWidget extends StatelessWidget {
     ),
     Project(
       name: 'UC Noteng',
-      description:
-          'Smart Note- Taking app with AI Powered organisation and search.',
+      description: 'Smart Note- Taking app with AI Powered organisation and search.',
       imageUrl: 'assets/icons/playstore-icon.png',
       accentColor: Color(0xFF3B82F6),
-      role: 'Mobile Developer',
+      role: 'Mobile Developer, UI/UX Designer',
       year: '2024',
       technologies: [
         'Flutter',
@@ -70,9 +69,11 @@ class ProjectPageWidget extends StatelessWidget {
       solutionScreens: [
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.32_uiivpe.png',
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.36_hvpf5l.png',
-        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.36.19_PM_jvryv3.png',
-        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.38.33_PM_ijdnej.png',
-        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.38.15_PM_l9y3jp.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_23.06.08_qqz3zl.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_23.06.15_i7p8ld.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_23.06.44_dz820q.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_23.06.24_ycyxjk.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_23.06.57_tnioms.png'
       ],
     ),
     Project(
