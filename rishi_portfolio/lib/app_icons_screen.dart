@@ -320,14 +320,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                       color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
-                                    child: SvgPicture.asset(
-                                      "assets/icons/resume.svg",
-                                      colorFilter: ColorFilter.mode(
-                                        ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
-                                        BlendMode.srcIn,
-                                      ),
-                                      height: 30,
-                                      width: 30,
+                                    child: Image.asset(
+                                      "assets/icons/resume.png",
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                      alignment: AlignmentGeometry.center,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -360,8 +357,16 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   child: Container(
                                     height: 70,
                                     width: 70,
-                                    decoration: _folderBoxDecoration(),
-                                    child: _blurredIcon(Bootstrap.wrench),
+                                    decoration: BoxDecoration(
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      "assets/icons/skills.png",
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                      alignment: AlignmentGeometry.center,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 8),
@@ -389,8 +394,16 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   child: Container(
                                     height: 70,
                                     width: 70,
-                                    decoration: _folderBoxDecoration(),
-                                    child: _blurredIcon(Icons.folder),
+                                    decoration: BoxDecoration(
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      "assets/icons/project_icon.png",
+                                      color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                      alignment: AlignmentGeometry.center,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 8),

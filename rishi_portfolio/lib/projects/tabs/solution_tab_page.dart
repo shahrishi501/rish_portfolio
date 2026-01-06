@@ -122,7 +122,7 @@ class _SolutionTabState extends State<SolutionTab> {
                       color: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: Image.asset(
+                    child: Image.network(
                       project.solutionScreens[index],
                       fit: BoxFit.contain,
                     ),

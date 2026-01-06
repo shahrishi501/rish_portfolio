@@ -33,8 +33,7 @@ class ProjectPageWidget extends StatelessWidget {
   List<Project> get projects => [
     Project(
       name: 'SVKM EduConnect',
-      description:
-          'Educational Platform connecting students with resources and learning materials.',
+      description: 'Educational Platform connecting students with resources and learning materials.',
       imageUrl: 'assets/icons/svkm_educonnect.png',
       accentColor: Color(0xFF6366F1),
       role: 'Full- Stack Developer',
@@ -42,7 +41,13 @@ class ProjectPageWidget extends StatelessWidget {
       technologies: ['Flutter', 'Firebase', 'Node.js'],
       problem: '',
       solution: '',
-      solutionScreens: [],
+      solutionScreens: [
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_0_-_iPhone_16_Plus_zrg7zo.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_1_-_iPhone_16_Plus_d3v1a6.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_2_-_iPhone_16_Plus_pmiy7s.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_4_-_iPhone_16_Plus_s3jepb.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_3_-_iPhone_16_Plus_cutxon.png'
+      ],
     ),
     Project(
       name: 'UC Noteng',
@@ -62,33 +67,65 @@ class ProjectPageWidget extends StatelessWidget {
       ],
       problem: '',
       solution: '',
-      solutionScreens: [],
+      solutionScreens: [
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.32_uiivpe.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.36_hvpf5l.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.36.19_PM_jvryv3.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.38.33_PM_ijdnej.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screenshot_2026-01-06_at_9.38.15_PM_l9y3jp.png',
+      ],
     ),
     Project(
       name: "Unistay",
-      description:
-          'Unistay is a platform to help students and professionals find accommodation.',
+      description: 'Unistay is a platform to help students and professionals find accommodation.',
       imageUrl: 'assets/icons/image 3.png',
       accentColor: Color(0xFFEC4899),
       role: 'Lead Developer',
-      year: '2025',
+      year: '2024',
       technologies: ['Flutter', 'Golang', 'PostgreSQL', 'Figma'],
       problem: '',
       solution: '',
-      solutionScreens: ['assets/img/unistay_home.jpg'],
+      solutionScreens: [
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/sign_up_pakzxp.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/home_g6iany.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Maps_mgywkq.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/favourites_s64nri.png'
+      ],
+    ),
+    Project(
+      name: "Moo App", 
+      description: "Moo App is a survey platform that connects brands with consumers for valuable insights.", 
+      imageUrl: 'assets/icons/moo_app.png', 
+      accentColor: Color(0xFF4CAF50), 
+      role: 'Lead App Developer', 
+      year: '2025', 
+      problem: '', 
+      solution: '', 
+      technologies: ['Flutter', 'Django', 'AWS'], 
+      solutionScreens: [
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Splash_Screen_ibdq4n.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Surveys_-_Complete_surveys._Earn_rewards._It_s_that_easy._c9z4nb.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Surveys_-_Complete_surveys._Earn_rewards._It_s_that_easy._1_mnvj61.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Spin_xmiplr.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Cashout_my7zqb.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Surveys_-_Complete_surveys._Earn_rewards._It_s_that_easy._2_kax6cg.png'
+      ]
     ),
     Project(
       name: "YouBook",
-      description:
-          'Social reading platform for book lovers to connect and share.',
+      description: 'Social reading platform for book lovers to connect and share.',
       imageUrl: 'assets/icons/Youbook logo_Red-02.png',
       accentColor: Color(0xFFEF4444),
       role: 'Frontend Developer',
-      year: '2023',
+      year: '2025',
       technologies: ['Flutter', 'GraphQL', 'WebSocket'],
       problem: '',
       solution: '',
-      solutionScreens: [],
+      solutionScreens: [
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Sub_page_brqlbm.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/author_page_dzsmpk.png',
+        'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Library_81_sdv9fj.png'
+      ],
     ),
   ];
 
