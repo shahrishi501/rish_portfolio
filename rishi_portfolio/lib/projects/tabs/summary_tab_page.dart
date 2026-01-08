@@ -13,6 +13,15 @@ class SummaryTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          Text("Summary",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              )),
+          
+          const SizedBox(height: 20),
           // Image
           Container(
             height: 180,
@@ -34,7 +43,7 @@ class SummaryTab extends StatelessWidget {
             project.description,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 15,
+              fontSize: 17,
               height: 1.6,
             ),
           ),

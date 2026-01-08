@@ -78,14 +78,26 @@ class ProjectPageWidget extends StatelessWidget {
     ),
     Project(
       name: "Unistay",
-      description: 'Unistay is a platform to help students and professionals find accommodation.',
+      description: 'Unistay is a platform designed to help outstation students and young professionals quickly find affordable, reliable, and convenient accommodation without the usual hassles of brokers, hidden charges, and confusing listings.\n\nThe goal was to create a transparent, fast, and trustworthy experience that reduces search time and increases confidence in booking a stay.',
       imageUrl: 'assets/icons/image 3.png',
       accentColor: Color(0xFFEC4899),
       role: 'Lead Developer',
       year: '2024',
       technologies: ['Flutter', 'Golang', 'PostgreSQL', 'Figma'],
-      problem: '',
-      solution: '',
+      problem: '''Students relocating to new cities often face:
+        Scattered and unreliable information
+        No verified reviews
+        Confusing pricing and hidden deposits
+        Poor search filters
+        Difficulty shortlisting and comparing stays
+        This creates anxiety around choosing a safe and trustworthy place to live.''',
+      solution: '''Unistay provides:
+      Verified listings with clear photos, amenities, and upfront pricing
+      Smart filters (budget, distance, gender preference, amenities)
+      Quick compare feature for side-by-side property comparison
+      Instant booking with minimal steps
+      Saved searches and personalized suggestions
+      The design emphasizes clarity, comfort, and belonging, something every student needs when living away from home.''',
       solutionScreens: [
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/sign_up_pakzxp.png',
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/home_g6iany.png',

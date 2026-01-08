@@ -8,6 +8,19 @@ class ProblemTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final lines = project.problem
+        .split('\n')
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    final intro = lines.isNotEmpty ? lines.first : '';
+    final outro = lines.length > 2 ? lines.last : '';
+    final bulletPoints = lines.length > 2 
+        ? lines.sublist(1, lines.length - 1) 
+        : (lines.length == 2 ? [lines[1]] : <String>[]);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -24,25 +37,60 @@ class ProblemTab extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          // Optional persona / research image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              project.imageUrl,
-              fit: BoxFit.cover,
+          // Intro text (not a bullet point)
+          if (intro.isNotEmpty)
+            Text(
+              intro,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                height: 1.6,
+              ),
             ),
-          ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
 
-          Text(
-            project.problem,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              height: 1.6,
+          // Display middle lines as bullet points
+          ...bulletPoints.map((point) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "•  ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    point,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      height: 1.6,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
+          )),
+
+          // Outro text (not a bullet point)
+          if (outro.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                outro,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  height: 1.6,
+                ),
+              ),
+            ),
         ],
       ),
     );

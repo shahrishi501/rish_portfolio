@@ -18,6 +18,18 @@ class _SolutionTabState extends State<SolutionTab> {
   Widget build(BuildContext context) {
     final project = widget.project;
 
+    final lines = project.solution
+        .split('\n')
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    final intro = lines.isNotEmpty ? lines.first : '';
+    final outro = lines.length > 2 ? lines.last : '';
+    final bulletPoints = lines.length > 2 
+        ? lines.sublist(1, lines.length - 1) 
+        : (lines.length == 2 ? [lines[1]] : <String>[]);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -36,33 +48,59 @@ class _SolutionTabState extends State<SolutionTab> {
           const SizedBox(height: 12),
 
           /// Intro
-          Text(
-            project.solution,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              height: 1.6,
+          if (intro.isNotEmpty)
+            Text(
+              intro,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                height: 1.6,
+              ),
             ),
-          ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
 
           /// Bullet points
-          // ...project.solutionPoints.map(
-          //   (point) => _Bullet(text: point),
-          // ),
-
-          const SizedBox(height: 20),
+          ...bulletPoints.map((point) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "•  ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    point,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      height: 1.6,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
 
           /// Outro
-          Text(
-            project.solution,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 15,
-              height: 1.6,
+          if (outro.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                outro,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  height: 1.6,
+                ),
+              ),
             ),
-          ),
 
           const SizedBox(height: 32),
 
