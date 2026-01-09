@@ -33,14 +33,27 @@ class ProjectPageWidget extends StatelessWidget {
   List<Project> get projects => [
     Project(
       name: 'SVKM EduConnect',
-      description: 'Educational Platform connecting students with resources and learning materials.',
+      description: 'Multiple school management app connecting teachers, parents, students, and admin for all SVKM schools.',
       imageUrl: 'assets/icons/svkm_educonnect.png',
       accentColor: Color(0xFF6366F1),
       role: 'Project Lead, Mobile Developer, UI/UX Designer',
       year: '2025',
       technologies: ['Flutter', 'Firebase', 'Node.js', 'AWS', 'MongoDB'],
-      problem: '',
-      solution: '',
+      problem: '''
+      SVKM EduConnect was created to address several challenges faced by the SVKM schools:
+      Communication between teachers and parents was on weekly basis only, leading to delays in addressing student issues
+      Communication platform was whatsapp and email which leads to loss of important information in the flood of messages, and at time parents not checking their mail boxes
+      Tracking student progress and attendance was manual and time-consuming for teachers
+      Sharing resources and assignments was inefficient, often relying on physical handouts or disparate digital tools
+      There was no centralized platform for all stakeholders (students, parents, teachers, admin) to interact and access information
+      ''',
+      solution: '''
+      SVKM EduConnect provides a comprehensive solution:
+      Real-time communication channels between teachers, parents, and students through in-app messaging and notifications
+      Dynamic and real-time time-table updates accessible to students and parents
+      Digital attendance tracking with automated reports for teachers and parents
+      School-wide announcements and event calendars to keep everyone informed
+      Leave requests and approvals managed within the app, with notifications for status updates and teacher appointment system as well''',
       solutionScreens: [
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_0_-_iPhone_16_Plus_zrg7zo.png',
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Screen_1_-_iPhone_16_Plus_d3v1a6.png',
@@ -51,7 +64,7 @@ class ProjectPageWidget extends StatelessWidget {
     ),
     Project(
       name: 'UC Noteng',
-      description: 'Smart Note- Taking app with AI Powered organisation and search.',
+      description: 'An app which every college student needs to find last minute notes, assignments, and resources shared by seniors and peers. \n\nFind job opportunities, internships, and events curated for your college. With a built-in calendar to track deadlines, and event reminders, \n\nNoteng keeps you organized and informed throughout your college journey.',
       imageUrl: 'assets/icons/playstore-icon.png',
       accentColor: Color(0xFF3B82F6),
       role: 'Mobile Developer, UI/UX Designer',
@@ -64,8 +77,18 @@ class ProjectPageWidget extends StatelessWidget {
         'Django',
         'Cloudinary',
       ],
-      problem: '',
-      solution: '',
+      problem: '''What are the biggest problems a college student faces?
+      Difficulty finding reliable and decent study materials and notes at the last minute
+      Communicating with seniors for guidance on finding internships, jobs, and projects
+      Managing the events of so many clubs and committees in college, leading to missed opportunities
+      Staying organized with deadlines, assignments, and exam schedules
+      These are the biggest problem Noteng aims to solve for all college students.''',
+      solution: '''Noteng solves the problem mentioned by:
+      A centralized platform for all notes filtered, sorted and categorized by college, branch, and semester
+      Each note has ratings and reviews from students to ensure quality and finding the best notes at the last minute before exam
+      AI Summarization of notes to quickly grasp key concepts and topics
+      A dedicated section for internship and job listings curated for college students
+      An event calendar integrating all college clubs and committees to keep students informed''',
       solutionScreens: [
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.32_uiivpe.png',
         'https://res.cloudinary.com/drjwbpliq/image/upload/f_auto,q_auto,w_800/Simulator_Screenshot_-_iPhone_17_-_2026-01-06_at_21.29.36_hvpf5l.png',
