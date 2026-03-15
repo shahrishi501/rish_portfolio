@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rishi_portfolio/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GetInTouchWidget extends StatelessWidget {
@@ -19,19 +20,20 @@ class GetInTouchWidget extends StatelessWidget {
   Future<void> _launchWhatsApp() async {
     final Uri whatsappUri = Uri.parse('https://wa.me/919619882826');
     if (await canLaunchUrl(whatsappUri)) {
-      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
         height: 260,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Stack(
@@ -44,7 +46,7 @@ class GetInTouchWidget extends StatelessWidget {
                 width: 180,
                 height: 180,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -77,7 +79,7 @@ class GetInTouchWidget extends StatelessWidget {
                         Text(
                           'Get',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.w500,
                             height: 0.9,
@@ -87,7 +89,7 @@ class GetInTouchWidget extends StatelessWidget {
                         Text(
                           'In',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.w500,
                             height: 0.9,
@@ -97,7 +99,7 @@ class GetInTouchWidget extends StatelessWidget {
                         Text(
                           'Touch',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.w500,
                             height: 0.9,
@@ -119,22 +121,18 @@ class GetInTouchWidget extends StatelessWidget {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      
+
                       children: [
                         InkWell(
                           onTap: _launchEmail,
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.email,
-                                color: Colors.white,
-                                size: 20,
-                              ),
+                              Icon(Icons.email, color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white, size: 20),
                               SizedBox(width: 8),
                               Text(
                                 'shahrishi501@gmail.com',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 16,
                                 ),
                               ),
@@ -146,16 +144,12 @@ class GetInTouchWidget extends StatelessWidget {
                           onTap: _launchWhatsApp,
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.phone,
-                                color: Colors.white,
-                                size: 20,
-                              ),
+                              Icon(Icons.phone, color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white, size: 20),
                               SizedBox(width: 8),
                               Text(
                                 '+91 9619882826',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                   fontSize: 16,
                                 ),
                               ),
@@ -167,40 +161,43 @@ class GetInTouchWidget extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.location_on,
-                              color: Colors.white,
+                              color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                               size: 20,
                             ),
                             SizedBox(width: 8),
                             Text(
                               'Mumbai, India',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 14),
+                        SizedBox(height: 34),
                         Align(
                           alignment: Alignment.center,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12,
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.black : Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: Text(
-                              'Contact Me',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                              child: Text(
+                                'Contact Me',
+                                style: TextStyle(
+                                  color: ThemeNotifier.themeMode.value == ThemeMode.light ? Colors.white : Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ),

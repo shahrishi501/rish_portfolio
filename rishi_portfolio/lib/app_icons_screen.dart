@@ -36,21 +36,21 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     final Uri url = Uri.parse(
       'https://drive.google.com/file/d/1NFMLIdBV8Wg3jwt8JKdKVZmI13PM-y_W/view?usp=sharing',
     );
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(url, mode: LaunchMode.platformDefault, webOnlyWindowName: '_blank')) {
       throw Exception('Could not launch $url');
     }
   }
 
   Future<void> _launchLinkedIn() async {
     final Uri url = Uri.parse('https://www.linkedin.com/in/rishi-shah501/');
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(url, mode: LaunchMode.platformDefault, webOnlyWindowName: '_blank')) {
       throw Exception('Could not launch $url');
     }
   }
 
   Future<void> _launchGithub() async {
     final Uri url = Uri.parse('https://github.com/shahrishi501');
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(url, mode: LaunchMode.platformDefault, webOnlyWindowName: '_blank')) {
       throw Exception('Could not launch $url');
     }
   }
