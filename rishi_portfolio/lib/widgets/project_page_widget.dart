@@ -36,7 +36,7 @@ class ProjectPageWidget extends StatelessWidget {
       description: 'Multiple school management app connecting teachers, parents, students, and admin for all SVKM schools.',
       imageUrl: 'assets/icons/svkm_educonnect.png',
       accentColor: Color(0xFF6366F1),
-      role: 'Project Lead, Mobile Developer, UI/UX Designer',
+      role: 'Senior Lead Developer',
       year: '2025',
       technologies: ['Flutter', 'Firebase', 'Node.js', 'AWS', 'MongoDB'],
       problem: '''
@@ -104,7 +104,7 @@ class ProjectPageWidget extends StatelessWidget {
       description: 'Unistay is a platform designed to help outstation students and young professionals quickly find affordable, reliable, and convenient accommodation without the usual hassles of brokers, hidden charges, and confusing listings.\n\nThe goal was to create a transparent, fast, and trustworthy experience that reduces search time and increases confidence in booking a stay.',
       imageUrl: 'assets/icons/image 3.png',
       accentColor: Color(0xFFEC4899),
-      role: 'Lead Developer',
+      role: 'Founder',
       year: '2024',
       technologies: ['Flutter', 'Golang', 'PostgreSQL', 'Figma'],
       problem: '''Students relocating to new cities often face:
